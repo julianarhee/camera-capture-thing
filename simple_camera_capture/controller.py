@@ -100,9 +100,9 @@ class CaptureController(object):
         self.last_ui_get_time = time.time()
         self.last_ui_put_time = time.time()
 
-        self.enable_save_to_disk = global_settings.get('enable_save_to_disk', False)
+        self.enable_save_to_disk = global_settings.get('enable_save_to_disk', True)
         logging.info("Save to disk?: %d" % self.enable_save_to_disk)
-        self.image_save_dir = global_settings.get('data_dir', None)
+        self.image_save_dir = global_settings.get('data_dir', '~/.camera_capture/data')
 
         self.use_simulated = global_settings.get('use_simulated', False)
         self.use_file_for_cam = global_settings.get('use_file_for_camera',
@@ -169,6 +169,7 @@ class CaptureController(object):
         # -------------------------------------------------------------
 
         if self.image_save_dir:
+            #print "...got to image dumpah..."
             self.image_dumper = ImageDumper(self.image_save_dir)
         else:
             self.image_dumper = None
@@ -280,7 +281,7 @@ class CaptureController(object):
 
         # if self.ui_queue.full():
         #     try:
-        #         self.ui_queue.get_nowait()
+        #         self.ui_queue.get_nowait()ƒ
         #     except Empty:
         #         return
         try:
@@ -356,6 +357,9 @@ class CaptureController(object):
     def continuously_acquire_images(self):
 
         logging.info('Started continuously acquiring...')
+
+        self.image_dump = ImageDumper(self.image_save_dir)
+        print "starting an image dump instance"
 
         self.frame_rate = -1.
         frame_number = 0
@@ -481,7 +485,7 @@ class CaptureController(object):
                     print f
 
             self.ui_queue_put(features)
-                
+            self.image_dump.save_image(features)    
                 
 
         self.camera_locked = 0
