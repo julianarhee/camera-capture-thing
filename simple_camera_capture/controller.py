@@ -20,6 +20,8 @@ from simple_camera_capture.led import *
 from simple_camera_capture.motion import *
 from settings import global_settings
 
+from simple_camera_capture.image_processing import ImageAnalyzer
+
 try:
     import queue
 except ImportError:
@@ -95,6 +97,9 @@ class CaptureController(object):
         # UI
         self.canvas_update_timer = None
         self.ui_queue = queue.Queue(5)
+        
+        #self.im_queue = queue.Queue(5) # NEW
+        #logging.info("ui_queue and im_queue created")
 
         self.target_ui_update_interval = 1 / 30.
         self.last_ui_get_time = time.time()
@@ -169,8 +174,8 @@ class CaptureController(object):
         # -------------------------------------------------------------
 
         if self.image_save_dir:
-            #print "...got to image dumpah..."
             self.image_dumper = ImageDumper(self.image_save_dir)
+            print "...done initializing image dumps..."
         else:
             self.image_dumper = None
 
@@ -263,11 +268,16 @@ class CaptureController(object):
         t = lambda: self.continuously_acquire_images()
         self.acq_thread = threading.Thread(target=t)
         self.acq_thread.start()
+        
+        #self.im_thread = threading.Thread(target=t)
+        #self.im_thread.start()
 
     def stop_continuous_acquisition(self):
         logging.info('Stopping continuous acquisition')
         self.continuously_acquiring = 0
         self.acq_thread.join()
+        
+        #self.im_thread.join()
 
     def ui_queue_put(self, item):
 
@@ -359,7 +369,10 @@ class CaptureController(object):
         logging.info('Started continuously acquiring...')
 
         self.image_dump = ImageDumper(self.image_save_dir)
-        print "starting an image dump instance"
+        print "creating image dumper"
+
+        #self.image_analyze = ImageAnalyzer(self.image_save_dir)
+        #print "creating image analyzer"
 
         self.frame_rate = -1.
         frame_number = 0
@@ -485,7 +498,13 @@ class CaptureController(object):
                     print f
 
             self.ui_queue_put(features)
-            self.image_dump.save_image(features)    
+            self.image_dump.save_image(features)
+
+            # TRY FFT on chunk of frames (some interval = 1-2 cycles of stimulus)
+            # try:
+            #     curr_nbins = len(self.image_analyze.listdir_nohidden(self.image_dump.base_path))
+            #     if curr_nbins >= 3: # eventually, replace num of bin folders with time period of stim cycle (?)
+            #         self.image_analyze()
                 
 
         self.camera_locked = 0

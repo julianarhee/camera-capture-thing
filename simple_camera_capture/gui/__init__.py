@@ -303,16 +303,16 @@ class CaptureGUI:
         #                        setter=lambda x: c.set_camera_attribute('ExposureMode', int(x)))
 
 
-        # self.cam_bar.add_var(
-        #     'Exposure/value',
-        #     label='time (ms)',
-        #     vtype=atb.TW_TYPE_UINT32,
-        #     min=1,
-        #     max=1000,
-        #     step=1,
-        #     getter=lambda: c.get_camera_attribute('ExposureValue'),
-        #     setter=lambda x: c.set_camera_attribute('ExposureValue', int(x)),
-        #     )
+        self.cam_bar.add_var(
+            'Exposure/value',
+            label='time (ms)',
+            vtype=atb.TW_TYPE_UINT32,
+            min=0,
+            max=15000,
+            step=1,
+            getter=lambda: c.get_camera_attribute('ExposureValue'),
+            setter=lambda x: c.set_camera_attribute('ExposureValue', int(x)),
+            )
 
         # self.cam_bar.add_var(
         #     'gain',
@@ -425,6 +425,7 @@ class CaptureGUI:
             return
 
         now = time.time()
+        #logging.info('tracker time is now NOW')
 
         try:
             features = self.controller.ui_queue_get()

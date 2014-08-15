@@ -101,6 +101,9 @@ class ProsilicaCameraDevice:
 
         frame = self.camera.getAndLockCurrentFrame()
 
+        # Get system time, too (hack way to line up times to MWorks):
+        systime = time.time()        
+        
         timestamp = frame.timestamp # / float(self.timestampFrequency)
         im_array = (asarray(frame)).copy()
 
@@ -112,7 +115,7 @@ class ProsilicaCameraDevice:
             self.last_timestamp = timestamp
 
 
-        return {'im_array': im_array, 'timestamp': timestamp, 'frame_number': self.frame_number }
+        return {'im_array': im_array, 'timestamp': timestamp, 'frame_number': self.frame_number, 'systime': systime}
 
 
 
