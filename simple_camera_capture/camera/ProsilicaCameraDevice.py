@@ -106,6 +106,7 @@ class ProsilicaCameraDevice:
         
         timestamp = frame.timestamp # / float(self.timestampFrequency)
         im_array = (asarray(frame)).copy()
+        im_array = im_array
 
         self.camera.releaseCurrentFrame()
 
