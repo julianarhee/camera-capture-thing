@@ -7,6 +7,7 @@ import sys
 
 import time
 import httplib
+from enum import Enum
 
 import numpy as np
 from numpy import *
@@ -117,6 +118,16 @@ class CaptureController(object):
     def initialize(self):
 
         # -------------------------------------------------------------
+        # Image "dumper" (put images to file system)
+        # -------------------------------------------------------------
+
+        if self.enable_save_to_disk:
+            self.image_dumper = ImageDumper(self.image_save_dir)
+            logging.info('Creating ImageDumper object at: %s', self.image_save_dir)
+        else:
+            self.image_dumper = None
+
+        # -------------------------------------------------------------
         # LED Controller
         # -------------------------------------------------------------
         logging.info('Initializing LED Control Subsystem')
@@ -167,17 +178,6 @@ class CaptureController(object):
         self.start_time = time.time()
         self.last_time = self.start_time
         self.conduit_fps = 0.
-
-
-        # -------------------------------------------------------------
-        # Image "dumper" (put images to file system)
-        # -------------------------------------------------------------
-
-        if self.image_save_dir:
-            self.image_dumper = ImageDumper(self.image_save_dir)
-            print "...done initializing image dumps..."
-        else:
-            self.image_dumper = None
 
 
         # -------------------------------------------------------------
@@ -361,6 +361,7 @@ class CaptureController(object):
     def get_frame_rate(self):
         return self.frame_rate
 
+
     # a method to actually run the camera
     # it will push images into a Queue object (in a non-blocking fashion)
     # so that the UI can have at them
@@ -368,8 +369,8 @@ class CaptureController(object):
 
         logging.info('Started continuously acquiring...')
 
-        self.image_dump = ImageDumper(self.image_save_dir)
-        print "creating image dumper"
+        #self.image_dump = ImageDumper(self.image_save_dir)
+        #print "creating image dumper"
 
         #self.image_analyze = ImageAnalyzer(self.image_save_dir)
         #print "creating image analyzer"
@@ -498,7 +499,10 @@ class CaptureController(object):
                     print f
 
             self.ui_queue_put(features)
-            self.image_dump.save_image(features)
+
+            # Only recording imaging data if recording status turned on:
+            if self.image_dumper.status():
+                self.image_dumper.save_image(features)
 
             # TRY FFT on chunk of frames (some interval = 1-2 cycles of stimulus)
             # try:
@@ -512,6 +516,65 @@ class CaptureController(object):
         logging.info('Stopped continuous acquiring')
         return
 
+
+    # Functions used in GUI to change camera attributes (using ATB):
+    def get_exposure_mode(self, a):
+        attribute = Enum('ExposureMode', 'Manual AutoOnce Auto')
+        label = self.camera_device.camera.getEnumAttribute(a)
+        return attribute[label].value-1
+
+    def set_exposure_mode(self, a, val):
+        attribute = Enum('ExposureMode', 'Manual AutoOnce Auto')
+        modes = list(attribute)
+        enumval = modes[val].name
+        self.camera_device.camera.setEnumAttribute(a, enumval)
+
+    def get_pixel_format(self, a):
+        attribute = Enum('PixelFormat', 'Mono8 Mono12Packed Mono16')
+        label = self.camera_device.camera.getEnumAttribute(a)
+        return attribute[label].value-1
+
+    def set_pixel_format(self, a, val):
+        attribute = Enum('PixelFormat', 'Mono8 Mono12Packed Mono16')
+        modes = list(attribute)
+        enumval = modes[val].name
+        self.camera_device.camera.setEnumAttribute(a, enumval)
+
+    def get_recording_name(self, a):
+        if self.image_dumper != None and getattr(self.image_dumper, a,
+                    None) is not None and self.image_dumper.recording != None:
+            return self.image_dumper.subname
+
+    def set_recording_name(self, name):
+        v = self.image_dumper
+        if getattr(v, 'subname', 'None') is None:
+            return
+        else:
+            setattr(v, 'subname', str(name))
+
+    def get_recording_status(self, a):
+        if self.image_dumper != None and getattr(self.image_dumper, a,
+                    None) is not None and self.image_dumper.recording != None:
+            return self.image_dumper.status()
+
+    def set_recording_status(self, a, val):
+        v = self.image_dumper
+
+        if getattr(v, 'recording', 'None') is None:
+            return
+        else:
+            logging.info('Changing recording status: %s %i', a, val)
+            setattr(v, 'recording', int(val))
+
+    @property
+    def recording(self):
+        return self.get_recording_status('recording')
+
+    @recording.setter
+    def recording(self, value):
+        self.set_recording_status('recording', int(value))
+
+
     def get_camera_attribute(self, a):
         if self.camera_device != None and getattr(self.camera_device, 'camera',
                 None) is not None and self.camera_device.camera != None:
@@ -524,8 +587,7 @@ class CaptureController(object):
             return
 
         self.camera_device.camera.setAttribute(a, int(value))
-        # Why is this being set twice??
-        self.camera_device.camera.setAttribute(a, int(value))
+
 
     @property
     def exposure(self):
@@ -537,7 +599,7 @@ class CaptureController(object):
 
     @property
     def binning(self):
-        return self.get_camera_attribute('BinningX')
+        return self.get_camera_attribute('BinningX'), self.get_camera_attribute('BinningY')
 
     @binning.setter
     def binning(self, value):
