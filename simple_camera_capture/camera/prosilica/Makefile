@@ -4,6 +4,7 @@
 #PYTHON = python
 #PYTHON = /Library/Frameworks/EPD64.framework/Versions/Current/bin/python
 #PYTHON = ~/.pythonbrew/pythons/Python-2.7.2/bin/python
+#PYTHON = /Users/julianarhee/anaconda/envs/devcam/bin/python
 
 # Target CPU
 CPU	 = x64
@@ -108,10 +109,10 @@ LDFLAGS = -g -shared -flat_namespace -lstdc++
 all: prosilica_module
 
 
-%.o:%.cxx
+%.o:%.cxx Prosilica.h
 	$(CC) $(CFLAGS) -fPIC $(VERSION) -c $<
 
-%.o:%.cpp
+%.o:%.cpp Prosilica.h
 	$(CC) $(CFLAGS) -fPIC $(VERSION) -c $<
 
 

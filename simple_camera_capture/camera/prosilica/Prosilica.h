@@ -91,7 +91,7 @@ public:
         
     void setAttribute(const char *attr_name, float value){
         PvAttrFloat32Set(camera_handle, attr_name, (tPvFloat32)value);
-    }
+    } 
     
     // Get camera parameters by name
     unsigned int getUint32Attribute(const char *attr_name){
@@ -104,7 +104,36 @@ public:
         tPvFloat32 val;
         PvAttrFloat32Get(camera_handle, attr_name, &val);
         return  (float)val;
-    }    
+    } 
+
+
+    // ADDED:  08.19.2014
+
+    void setEnumAttribute(const char *attr_name, const char *value){
+        PvAttrEnumSet(camera_handle, attr_name, value);
+    }
+
+    char *getEnumAttribute(const char *attr_name){
+        #define PV_ENUM_ATTR_LEN 255
+        char *buffer = (char *)calloc(PV_ENUM_ATTR_LEN, sizeof(char));
+        unsigned long psize;
+        PvAttrEnumGet(camera_handle, attr_name, buffer, PV_ENUM_ATTR_LEN, &psize);
+        return  buffer;
+    }   
+
+    void setAttribute(const char *attr_name, const char *value){
+        PvAttrStringSet(camera_handle, attr_name, value);
+    }
+
+    char *getStringAttribute(const char *attr_name){
+        #define PV_STRING_ATTR_LEN 255
+        char *buffer = (char *)calloc(PV_STRING_ATTR_LEN, sizeof(char));
+        unsigned long psize;
+        PvAttrStringGet(camera_handle, attr_name, buffer, PV_STRING_ATTR_LEN, &psize);
+        return  buffer;
+
+        // TODO: this will leak!
+    }      
 
 
     // Allocate memory for one image frame    
@@ -282,7 +311,7 @@ public:
     }
     
     void broadcastFrameReady(){
-        cerr << "FRAME READY" << endl;
+        // cerr << "FRAME READY" << endl;
         pthread_cond_broadcast(&frame_ready_cond);
     }
         
@@ -292,7 +321,7 @@ public:
 
         lockReadyFrames();
 
-        // cerr << "Ready: " << ready_frames.size() << " / Queued: " << nqueued << endl;
+        //cerr << "Ready: " << ready_frames.size() << " / Queued: " << nqueued << endl;
         while(ready_frames.size() == 0){
             waitForReadyFrames();
             // unlockReadyFrames();
@@ -387,6 +416,8 @@ public:
         // cerr << "nqueued: " << nqueued << endl;
         // cerr << "filling frame: " << frame_index << endl;
 
+        cerr.flush(); 
+
         lockReadyFrames();
         
         // put the completed frame in ready_frames
@@ -403,7 +434,7 @@ public:
 
             int requeue_frame_index = *((int *)requeue_frame->Context[FRAME_CONTEXT_INDEX]);
             
-            cerr << "DROPPED FRAME: requeued frame index: " << requeue_frame_index << endl;
+            // cerr << "DROPPED FRAME: requeued frame index: " << requeue_frame_index << endl;
             queueCameraFrame(requeue_frame_index);
         }
 

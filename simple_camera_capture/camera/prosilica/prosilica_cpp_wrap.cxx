@@ -13256,64 +13256,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ProsilicaCamera_setAttribute(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[4];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = args ? (int)PyObject_Length(args) : 0;
-  for (ii = 0; (ii < 3) && (ii < argc); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ProsilicaCamera, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_ProsilicaCamera_setAttribute__SWIG_0(self, args);
-        }
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ProsilicaCamera, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_float(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_ProsilicaCamera_setAttribute__SWIG_1(self, args);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'ProsilicaCamera_setAttribute'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    ProsilicaCamera::setAttribute(char const *,unsigned int)\n"
-    "    ProsilicaCamera::setAttribute(char const *,float)\n");
-  return 0;
-}
-
-
 SWIGINTERN PyObject *_wrap_ProsilicaCamera_getUint32Attribute(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   ProsilicaCamera *arg1 = (ProsilicaCamera *) 0 ;
@@ -13374,6 +13316,240 @@ SWIGINTERN PyObject *_wrap_ProsilicaCamera_getFloat32Attribute(PyObject *SWIGUNU
   arg2 = reinterpret_cast< char * >(buf2);
   result = (float)(arg1)->getFloat32Attribute((char const *)arg2);
   resultobj = SWIG_From_float(static_cast< float >(result));
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ProsilicaCamera_setEnumAttribute(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ProsilicaCamera *arg1 = (ProsilicaCamera *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:ProsilicaCamera_setEnumAttribute",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ProsilicaCamera, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ProsilicaCamera_setEnumAttribute" "', argument " "1"" of type '" "ProsilicaCamera *""'"); 
+  }
+  arg1 = reinterpret_cast< ProsilicaCamera * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ProsilicaCamera_setEnumAttribute" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  res3 = SWIG_AsCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ProsilicaCamera_setEnumAttribute" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = reinterpret_cast< char * >(buf3);
+  (arg1)->setEnumAttribute((char const *)arg2,(char const *)arg3);
+  resultobj = SWIG_Py_Void();
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ProsilicaCamera_getEnumAttribute(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ProsilicaCamera *arg1 = (ProsilicaCamera *) 0 ;
+  char *arg2 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ProsilicaCamera_getEnumAttribute",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ProsilicaCamera, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ProsilicaCamera_getEnumAttribute" "', argument " "1"" of type '" "ProsilicaCamera *""'"); 
+  }
+  arg1 = reinterpret_cast< ProsilicaCamera * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ProsilicaCamera_getEnumAttribute" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  result = (char *)(arg1)->getEnumAttribute((char const *)arg2);
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ProsilicaCamera_setAttribute__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ProsilicaCamera *arg1 = (ProsilicaCamera *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:ProsilicaCamera_setAttribute",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ProsilicaCamera, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ProsilicaCamera_setAttribute" "', argument " "1"" of type '" "ProsilicaCamera *""'"); 
+  }
+  arg1 = reinterpret_cast< ProsilicaCamera * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ProsilicaCamera_setAttribute" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  res3 = SWIG_AsCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ProsilicaCamera_setAttribute" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = reinterpret_cast< char * >(buf3);
+  (arg1)->setAttribute((char const *)arg2,(char const *)arg3);
+  resultobj = SWIG_Py_Void();
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ProsilicaCamera_setAttribute(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = args ? (int)PyObject_Length(args) : 0;
+  for (ii = 0; (ii < 3) && (ii < argc); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ProsilicaCamera, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_ProsilicaCamera_setAttribute__SWIG_0(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ProsilicaCamera, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_float(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_ProsilicaCamera_setAttribute__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ProsilicaCamera, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_ProsilicaCamera_setAttribute__SWIG_2(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'ProsilicaCamera_setAttribute'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ProsilicaCamera::setAttribute(char const *,unsigned int)\n"
+    "    ProsilicaCamera::setAttribute(char const *,float)\n"
+    "    ProsilicaCamera::setAttribute(char const *,char const *)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_ProsilicaCamera_getStringAttribute(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ProsilicaCamera *arg1 = (ProsilicaCamera *) 0 ;
+  char *arg2 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ProsilicaCamera_getStringAttribute",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ProsilicaCamera, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ProsilicaCamera_getStringAttribute" "', argument " "1"" of type '" "ProsilicaCamera *""'"); 
+  }
+  arg1 = reinterpret_cast< ProsilicaCamera * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ProsilicaCamera_getStringAttribute" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  result = (char *)(arg1)->getStringAttribute((char const *)arg2);
+  resultobj = SWIG_FromCharPtr((const char *)result);
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return resultobj;
 fail:
@@ -14238,9 +14414,12 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"PvCameraEventCallbackUnRegister", _wrap_PvCameraEventCallbackUnRegister, METH_VARARGS, NULL},
 	 { (char *)"PvUtilityColorInterpolate", _wrap_PvUtilityColorInterpolate, METH_VARARGS, NULL},
 	 { (char *)"frame_callback", _wrap_frame_callback, METH_VARARGS, NULL},
-	 { (char *)"ProsilicaCamera_setAttribute", _wrap_ProsilicaCamera_setAttribute, METH_VARARGS, NULL},
 	 { (char *)"ProsilicaCamera_getUint32Attribute", _wrap_ProsilicaCamera_getUint32Attribute, METH_VARARGS, NULL},
 	 { (char *)"ProsilicaCamera_getFloat32Attribute", _wrap_ProsilicaCamera_getFloat32Attribute, METH_VARARGS, NULL},
+	 { (char *)"ProsilicaCamera_setEnumAttribute", _wrap_ProsilicaCamera_setEnumAttribute, METH_VARARGS, NULL},
+	 { (char *)"ProsilicaCamera_getEnumAttribute", _wrap_ProsilicaCamera_getEnumAttribute, METH_VARARGS, NULL},
+	 { (char *)"ProsilicaCamera_setAttribute", _wrap_ProsilicaCamera_setAttribute, METH_VARARGS, NULL},
+	 { (char *)"ProsilicaCamera_getStringAttribute", _wrap_ProsilicaCamera_getStringAttribute, METH_VARARGS, NULL},
 	 { (char *)"ProsilicaCamera__initFrame", _wrap_ProsilicaCamera__initFrame, METH_VARARGS, NULL},
 	 { (char *)"ProsilicaCamera__check", _wrap_ProsilicaCamera__check, METH_VARARGS, NULL},
 	 { (char *)"ProsilicaCamera__reportError", _wrap_ProsilicaCamera__reportError, METH_VARARGS, NULL},

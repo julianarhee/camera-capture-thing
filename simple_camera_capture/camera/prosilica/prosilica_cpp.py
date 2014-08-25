@@ -714,9 +714,12 @@ class ProsilicaCamera(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, ProsilicaCamera, name)
     __repr__ = _swig_repr
-    def setAttribute(self, *args): return _prosilica_cpp.ProsilicaCamera_setAttribute(self, *args)
     def getUint32Attribute(self, *args): return _prosilica_cpp.ProsilicaCamera_getUint32Attribute(self, *args)
     def getFloat32Attribute(self, *args): return _prosilica_cpp.ProsilicaCamera_getFloat32Attribute(self, *args)
+    def setEnumAttribute(self, *args): return _prosilica_cpp.ProsilicaCamera_setEnumAttribute(self, *args)
+    def getEnumAttribute(self, *args): return _prosilica_cpp.ProsilicaCamera_getEnumAttribute(self, *args)
+    def setAttribute(self, *args): return _prosilica_cpp.ProsilicaCamera_setAttribute(self, *args)
+    def getStringAttribute(self, *args): return _prosilica_cpp.ProsilicaCamera_getStringAttribute(self, *args)
     def _initFrame(self, *args): return _prosilica_cpp.ProsilicaCamera__initFrame(self, *args)
     def _check(self, *args): return _prosilica_cpp.ProsilicaCamera__check(self, *args)
     def _reportError(self, *args): return _prosilica_cpp.ProsilicaCamera__reportError(self, *args)
