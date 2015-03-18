@@ -100,7 +100,12 @@ class CaptureGUI:
         self.update_interval = 1 / 10000.
 
         atb.init()
-        self.window = glumpy.Window(900, 600)
+
+        # Try grabbing current Width x Height for window to draw:
+        # W = self.controller.get_camera_attribute('Width')
+        # H = self.controller.get_camera_attribute('Height')
+        # print "DEFINING WINDOW!!!! " + str(W) + ", " + str(H)
+        self.window = glumpy.Window(656, 492) # (900, 700)
 
         # ---------------------------------------------------------------------
         #   STAGE CONTROLS
@@ -289,6 +294,18 @@ class CaptureGUI:
             vtype=PixelFormat,
             getter=lambda: c.get_pixel_format('PixelFormat'),
             setter=lambda x: c.set_pixel_format('PixelFormat', int(x)),
+            ) 
+
+
+        self.cam_bar.add_var(
+            'BytesPerFrame',
+            label='total bytes per frame',
+            vtype=atb.TW_TYPE_UINT32,
+            min=1,
+            max=645504,
+            step=1,
+            getter=lambda: c.get_camera_attribute('TotalBytesPerFrame'),
+            # setter=lambda x: c.set_camera_attribute('BinningX', int(x)),
             )
 
 
@@ -297,29 +314,29 @@ class CaptureGUI:
             label='frame rate',
             vtype=atb.TW_TYPE_FLOAT,
             min=1,
-            max=200,
+            max=125,
             step=0.1,
             readonly=True,
-            getter=lambda: float(c.get_frame_rate())
+            getter=lambda: float(c.get_frame_rate()),
             )        
 
         self.cam_bar.add_var(
-            'Binning/binningx',
+            'Binning/binningX',
             label='binning X',
             vtype=atb.TW_TYPE_UINT32,
             min=1,
-            max=16,
+            max=4,
             step=1,
             getter=lambda: c.get_camera_attribute('BinningX'),
             setter=lambda x: c.set_camera_attribute('BinningX', int(x)),
             )
 
         self.cam_bar.add_var(
-            'Binning/binningy',
+            'Binning/binningY',
             label='binning Y',
             vtype=atb.TW_TYPE_UINT32,
             min=1,
-            max=16,
+            max=4,
             step=1,
             getter=lambda: c.get_camera_attribute('BinningY'),
             setter=lambda x: c.set_camera_attribute('BinningY', int(x)),
@@ -379,7 +396,7 @@ class CaptureGUI:
             label='width',
             vtype=atb.TW_TYPE_UINT32,
             min=1,
-            max=800,#656,
+            max=656,#656,
             step=1,
             #target=c,
             getter=lambda: c.get_camera_attribute('Width'),
@@ -392,7 +409,7 @@ class CaptureGUI:
             label='height',
             vtype=atb.TW_TYPE_UINT32,
             min=1,
-            max=800,#492,
+            max=492,#492,
             step=1,
             #target=c,
             getter=lambda: c.get_camera_attribute('Height'),

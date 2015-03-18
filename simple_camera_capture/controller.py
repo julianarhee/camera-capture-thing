@@ -153,8 +153,13 @@ class CaptureController(object):
                 logging.info('Connecting to Camera...')
                 self.camera_device = ProsilicaCameraDevice()
 
-                self.binning = 4
+                self.binningX = 4
+                self.binningY = 4
                 self.gain = 1
+                currbinx = self.binningX
+                currbiny = self.binningY
+                self.roi_width = 656/currbinx #164
+                self.roi_height = 456/currbiny #122
 
         except Exception, e:
                 logging.warning("Error connecting to camera: %s" % e.message)
@@ -501,7 +506,7 @@ class CaptureController(object):
             self.ui_queue_put(features)
 
             # Only recording imaging data if recording status turned on:
-            if self.image_dumper.status():
+            if self.image_dumper != None and self.image_dumper.status():
                 self.image_dumper.save_image(features)
 
             # TRY FFT on chunk of frames (some interval = 1-2 cycles of stimulus)
@@ -538,6 +543,7 @@ class CaptureController(object):
         attribute = Enum('PixelFormat', 'Mono8 Mono12Packed Mono16')
         modes = list(attribute)
         enumval = modes[val].name
+        logging.info('Changing pixel format: %s %i', a, val)
         self.camera_device.camera.setEnumAttribute(a, enumval)
 
     def get_recording_name(self, a):
@@ -566,6 +572,7 @@ class CaptureController(object):
             logging.info('Changing recording status: %s %i', a, val)
             setattr(v, 'recording', int(val))
 
+
     @property
     def recording(self):
         return self.get_recording_status('recording')
@@ -585,8 +592,17 @@ class CaptureController(object):
     def set_camera_attribute(self, a, value):
         if getattr(self.camera_device, 'camera', None) is None:
             return
-
         self.camera_device.camera.setAttribute(a, int(value))
+
+
+    def set_width(self, a):
+        binX = self.get_camera_attribute('BinningX')
+        print "got called"
+        self.set_camera_attribute(a, int(656/binX))
+
+    def set_height(self, a):
+        binY = self.get_camera_attribute('BinningY')
+        self.set_camera_attribute(a, int(492/binY))
 
 
     @property
@@ -597,15 +613,30 @@ class CaptureController(object):
     def exposure(self, value):
         self.set_camera_attribute('ExposureValue', int(value))
 
+
     @property
-    def binning(self):
-        return self.get_camera_attribute('BinningX'), self.get_camera_attribute('BinningY')
+    def binningX(self):
+        return self.get_camera_attribute('BinningX')
 
-    @binning.setter
-    def binning(self, value):
+    @binningX.setter
+    def binningX(self, value):
         self.set_camera_attribute('BinningX', int(value))
-        self.set_camera_attribute('BinningY', int(value))
+        #binx = self.get_camera_attribute('BinningX')
+        #self.camera_device.camera.setAttribute('Width', 656/int(value))
+        self.set_width('Width')
+        time.sleep(0.1)
 
+
+    @property
+    def binningY(self):
+        return self.get_camera_attribute('BinningY')
+
+    @binningY.setter
+    def binningY(self, value):
+        self.set_camera_attribute('BinningY', int(value))
+        #biny = self.get_camera_attribute('BinningY')
+        #self.set_camera_attribute('Height', int(492/value))
+        #self.camera_device.camera.setAttribute('Height', 492/int(value))
         time.sleep(0.1)
 
     @property
@@ -617,6 +648,7 @@ class CaptureController(object):
         self.gain_factor = value
         self.set_camera_attribute('GainValue', int(value))
 
+
     @property
     def roi_width(self):
         return self.get_camera_attribute('Width')
@@ -625,6 +657,12 @@ class CaptureController(object):
     def roi_width(self, value):
         self.set_camera_attribute('Width', int(value))
 
+    # @roi_width.setter
+    # def roi_width(self, self.get_camera_attribute('BinningX')):
+    #     binX = self.get_camera_attribute('BinningX')
+    #     self.set_camera_attribute('Width', int(656/binX))
+
+
     @property
     def roi_height(self):
         return self.get_camera_attribute('Height')
@@ -632,6 +670,13 @@ class CaptureController(object):
     @roi_height.setter
     def roi_height(self, value):
         self.set_camera_attribute('Height', int(value))
+
+    # @roi_height.setter
+    # def roi_height(self):
+    #     binY = self.get_camera_attribute('BinningY')
+    #     self.set_camera_attribute('Height', int(492/binY))
+
+
 
     @property
     def roi_offset_x(self):

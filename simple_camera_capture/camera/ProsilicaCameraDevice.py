@@ -107,6 +107,7 @@ class ProsilicaCameraDevice:
         timestamp = frame.timestamp # / float(self.timestampFrequency)
         im_array = (asarray(frame)).copy()
         im_array = im_array
+        #print im_array.size
 
         self.camera.releaseCurrentFrame()
 
@@ -114,7 +115,6 @@ class ProsilicaCameraDevice:
         if timestamp != self.last_timestamp:
             self.frame_number += 1        
             self.last_timestamp = timestamp
-
 
         return {'im_array': im_array, 'timestamp': timestamp, 'frame_number': self.frame_number, 'systime': systime}
 

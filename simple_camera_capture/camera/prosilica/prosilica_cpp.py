@@ -766,12 +766,8 @@ def getCameraList():
   return _prosilica_cpp.getCameraList()
 getCameraList = _prosilica_cpp.getCameraList
 
-def test_it(*args):
-  return _prosilica_cpp.test_it(*args)
-test_it = _prosilica_cpp.test_it
-
-def test_it2():
-  return _prosilica_cpp.test_it2()
+def test_it2(*args):
+  return _prosilica_cpp.test_it2(*args)
 test_it2 = _prosilica_cpp.test_it2
 # This file is compatible with both classic and new-style classes.
 

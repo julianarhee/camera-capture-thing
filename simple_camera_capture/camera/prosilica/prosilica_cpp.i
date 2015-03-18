@@ -55,7 +55,7 @@ namespace std {
 		inter->two = 2;
 		inter->nd = 2;
 		inter->typekind = 'u';
-		inter->itemsize = sizeof(unsigned char);
+		inter->itemsize = sizeof(unsigned short);
 		inter->flags = (NPY_CONTIGUOUS | NPY_OWNDATA | NPY_ALIGNED);// |  NPY_NOTSWAPPED);
 
 		Py_intptr_t *shape = (Py_intptr_t *)malloc(2*sizeof(Py_intptr_t));

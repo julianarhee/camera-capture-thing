@@ -18,9 +18,9 @@ void frame_callback(tPvFrame *frame){
     cam->frameCompleted(frame);
 }
 
-void _frameTo1DArray(tPvFrame frame, short *array, int dim){
+void _frameTo1DArray(tPvFrame frame, unsigned short *array, int dim){
 
-    short *buffer = (short *)frame.ImageBuffer;
+    unsigned short *buffer = (unsigned short *)frame.ImageBuffer;
     memcpy(array, buffer, dim);
 }
 
@@ -42,7 +42,7 @@ std::vector<tPvCameraInfo> getCameraList() {
     return camera_vector;
 }
 
-void test_it(short *array, int dim){
+void test_it2(unsigned short *array, int dim){
     for(int i = 0; i < dim-1; i++){
 	array[i] = 1;
     }	

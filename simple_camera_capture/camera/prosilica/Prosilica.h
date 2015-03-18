@@ -114,7 +114,7 @@ public:
     }
 
     char *getEnumAttribute(const char *attr_name){
-        #define PV_ENUM_ATTR_LEN 255
+        #define PV_ENUM_ATTR_LEN 65536
         char *buffer = (char *)calloc(PV_ENUM_ATTR_LEN, sizeof(char));
         unsigned long psize;
         PvAttrEnumGet(camera_handle, attr_name, buffer, PV_ENUM_ATTR_LEN, &psize);
@@ -126,7 +126,7 @@ public:
     }
 
     char *getStringAttribute(const char *attr_name){
-        #define PV_STRING_ATTR_LEN 255
+        #define PV_STRING_ATTR_LEN 65536
         char *buffer = (char *)calloc(PV_STRING_ATTR_LEN, sizeof(char));
         unsigned long psize;
         PvAttrStringGet(camera_handle, attr_name, buffer, PV_STRING_ATTR_LEN, &psize);
@@ -144,7 +144,7 @@ public:
 
         cerr << "FrameSize = " << FrameSize << endl;
         
-        frame->ImageBuffer = new char[FrameSize];
+        frame->ImageBuffer = new short[FrameSize];
         if(frame->ImageBuffer){
             frame->ImageBufferSize = FrameSize;
         } else {
@@ -489,9 +489,9 @@ public:
 // Helper function (for bridging to python)
 // should be called with dim = width * height
 // (maybe move this out as an %extend?
-void _frameTo1DArray(tPvFrame frame, short *array, int dim);
+void _frameTo1DArray(tPvFrame frame, unsigned short *array, int dim);
 std::vector<tPvCameraInfo> getCameraList();
-void test_it(short *array, int dim);
+void test_it2(unsigned short *array, int dim);
 tPvFrame *test_it2();
 
 
