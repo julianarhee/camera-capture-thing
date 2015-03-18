@@ -49,7 +49,7 @@ class TrackerView:
         glEnable(GL_TEXTURE_2D)
         glDisable(GL_LIGHTING)
         self.texture = glGenTextures(1)
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1)
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 4)
         self.gl_inited = True
 
     def draw(self, frame):
@@ -58,7 +58,7 @@ class TrackerView:
             self.prepare_opengl()
 
         (self.frame_width, self.frame_height) = frame
-
+        #print "frame: " + str(frame)
         # if self.toggle:
         #     self.toggle = False
         #     glClearColor(1.0,1.0,1.0,1.0)
@@ -126,10 +126,10 @@ class TrackerView:
 
             glColor4f(1., 1., 1., 1.)
             glBindTexture(GL_TEXTURE_2D, self.texture)
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
             glTexImage2D(
                 GL_TEXTURE_2D,
                 0,
@@ -138,9 +138,15 @@ class TrackerView:
                 self.im_array.shape[0],
                 0,
                 GL_LUMINANCE,
+                
+                # Recast im_array from camera as uint8 regardless for GUI display:
                 GL_UNSIGNED_BYTE,
-                self.im_array.astype(uint8),
+                #self.im_array.astype(uint8),
+                #GL_UNSIGNED_SHORT,
+                self.im_array.astype(uint16),
                 )
+            # print self.im_array
+            #print "imarray: " + str(self.im_array.shape)
 
             glBindTexture(GL_TEXTURE_2D, self.texture)
             glBegin(GL_QUADS)

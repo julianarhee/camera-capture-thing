@@ -2950,30 +2950,30 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 #define SWIGTYPE_p_p_PyObject swig_types[10]
 #define SWIGTYPE_p_p_p_char swig_types[11]
 #define SWIGTYPE_p_p_void swig_types[12]
-#define SWIGTYPE_p_short swig_types[13]
-#define SWIGTYPE_p_size_type swig_types[14]
-#define SWIGTYPE_p_std__allocatorT_tPvCameraInfo_t swig_types[15]
-#define SWIGTYPE_p_std__invalid_argument swig_types[16]
-#define SWIGTYPE_p_std__vectorT__Tp__Alloc_t swig_types[17]
-#define SWIGTYPE_p_std__vectorT_tPvCameraInfo_std__allocatorT_tPvCameraInfo_t_t swig_types[18]
-#define SWIGTYPE_p_swig__SwigPyIterator swig_types[19]
-#define SWIGTYPE_p_tPvAccessFlags swig_types[20]
-#define SWIGTYPE_p_tPvAttributeFlags swig_types[21]
-#define SWIGTYPE_p_tPvAttributeInfo swig_types[22]
-#define SWIGTYPE_p_tPvBayerPattern swig_types[23]
-#define SWIGTYPE_p_tPvCameraEvent swig_types[24]
-#define SWIGTYPE_p_tPvCameraInfo swig_types[25]
-#define SWIGTYPE_p_tPvCameraInfoEx swig_types[26]
-#define SWIGTYPE_p_tPvDatatype swig_types[27]
-#define SWIGTYPE_p_tPvErr swig_types[28]
-#define SWIGTYPE_p_tPvFrame swig_types[29]
-#define SWIGTYPE_p_tPvImageFormat swig_types[30]
-#define SWIGTYPE_p_tPvInterface swig_types[31]
-#define SWIGTYPE_p_tPvIpConfig swig_types[32]
-#define SWIGTYPE_p_tPvIpSettings swig_types[33]
-#define SWIGTYPE_p_tPvLinkEvent swig_types[34]
-#define SWIGTYPE_p_unsigned_char swig_types[35]
-#define SWIGTYPE_p_unsigned_long swig_types[36]
+#define SWIGTYPE_p_size_type swig_types[13]
+#define SWIGTYPE_p_std__allocatorT_tPvCameraInfo_t swig_types[14]
+#define SWIGTYPE_p_std__invalid_argument swig_types[15]
+#define SWIGTYPE_p_std__vectorT__Tp__Alloc_t swig_types[16]
+#define SWIGTYPE_p_std__vectorT_tPvCameraInfo_std__allocatorT_tPvCameraInfo_t_t swig_types[17]
+#define SWIGTYPE_p_swig__SwigPyIterator swig_types[18]
+#define SWIGTYPE_p_tPvAccessFlags swig_types[19]
+#define SWIGTYPE_p_tPvAttributeFlags swig_types[20]
+#define SWIGTYPE_p_tPvAttributeInfo swig_types[21]
+#define SWIGTYPE_p_tPvBayerPattern swig_types[22]
+#define SWIGTYPE_p_tPvCameraEvent swig_types[23]
+#define SWIGTYPE_p_tPvCameraInfo swig_types[24]
+#define SWIGTYPE_p_tPvCameraInfoEx swig_types[25]
+#define SWIGTYPE_p_tPvDatatype swig_types[26]
+#define SWIGTYPE_p_tPvErr swig_types[27]
+#define SWIGTYPE_p_tPvFrame swig_types[28]
+#define SWIGTYPE_p_tPvImageFormat swig_types[29]
+#define SWIGTYPE_p_tPvInterface swig_types[30]
+#define SWIGTYPE_p_tPvIpConfig swig_types[31]
+#define SWIGTYPE_p_tPvIpSettings swig_types[32]
+#define SWIGTYPE_p_tPvLinkEvent swig_types[33]
+#define SWIGTYPE_p_unsigned_char swig_types[34]
+#define SWIGTYPE_p_unsigned_long swig_types[35]
+#define SWIGTYPE_p_unsigned_short swig_types[36]
 #define SWIGTYPE_p_value_type swig_types[37]
 #define SWIGTYPE_p_void swig_types[38]
 static swig_type_info *swig_types[40];
@@ -4874,7 +4874,7 @@ SWIGINTERN PyObject *tPvFrame___get_array_struct(tPvFrame *self){
 		inter->two = 2;
 		inter->nd = 2;
 		inter->typekind = 'u';
-		inter->itemsize = sizeof(unsigned char);
+		inter->itemsize = sizeof(unsigned short);
 		inter->flags = (NPY_CONTIGUOUS | NPY_OWNDATA | NPY_ALIGNED);// |  NPY_NOTSWAPPED);
 
 		Py_intptr_t *shape = (Py_intptr_t *)malloc(2*sizeof(Py_intptr_t));
@@ -13256,64 +13256,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ProsilicaCamera_setAttribute(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[4];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = args ? (int)PyObject_Length(args) : 0;
-  for (ii = 0; (ii < 3) && (ii < argc); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ProsilicaCamera, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_ProsilicaCamera_setAttribute__SWIG_0(self, args);
-        }
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ProsilicaCamera, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_float(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_ProsilicaCamera_setAttribute__SWIG_1(self, args);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'ProsilicaCamera_setAttribute'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    ProsilicaCamera::setAttribute(char const *,unsigned int)\n"
-    "    ProsilicaCamera::setAttribute(char const *,float)\n");
-  return 0;
-}
-
-
 SWIGINTERN PyObject *_wrap_ProsilicaCamera_getUint32Attribute(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   ProsilicaCamera *arg1 = (ProsilicaCamera *) 0 ;
@@ -13374,6 +13316,240 @@ SWIGINTERN PyObject *_wrap_ProsilicaCamera_getFloat32Attribute(PyObject *SWIGUNU
   arg2 = reinterpret_cast< char * >(buf2);
   result = (float)(arg1)->getFloat32Attribute((char const *)arg2);
   resultobj = SWIG_From_float(static_cast< float >(result));
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ProsilicaCamera_setEnumAttribute(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ProsilicaCamera *arg1 = (ProsilicaCamera *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:ProsilicaCamera_setEnumAttribute",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ProsilicaCamera, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ProsilicaCamera_setEnumAttribute" "', argument " "1"" of type '" "ProsilicaCamera *""'"); 
+  }
+  arg1 = reinterpret_cast< ProsilicaCamera * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ProsilicaCamera_setEnumAttribute" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  res3 = SWIG_AsCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ProsilicaCamera_setEnumAttribute" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = reinterpret_cast< char * >(buf3);
+  (arg1)->setEnumAttribute((char const *)arg2,(char const *)arg3);
+  resultobj = SWIG_Py_Void();
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ProsilicaCamera_getEnumAttribute(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ProsilicaCamera *arg1 = (ProsilicaCamera *) 0 ;
+  char *arg2 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ProsilicaCamera_getEnumAttribute",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ProsilicaCamera, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ProsilicaCamera_getEnumAttribute" "', argument " "1"" of type '" "ProsilicaCamera *""'"); 
+  }
+  arg1 = reinterpret_cast< ProsilicaCamera * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ProsilicaCamera_getEnumAttribute" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  result = (char *)(arg1)->getEnumAttribute((char const *)arg2);
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ProsilicaCamera_setAttribute__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ProsilicaCamera *arg1 = (ProsilicaCamera *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:ProsilicaCamera_setAttribute",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ProsilicaCamera, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ProsilicaCamera_setAttribute" "', argument " "1"" of type '" "ProsilicaCamera *""'"); 
+  }
+  arg1 = reinterpret_cast< ProsilicaCamera * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ProsilicaCamera_setAttribute" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  res3 = SWIG_AsCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ProsilicaCamera_setAttribute" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = reinterpret_cast< char * >(buf3);
+  (arg1)->setAttribute((char const *)arg2,(char const *)arg3);
+  resultobj = SWIG_Py_Void();
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ProsilicaCamera_setAttribute(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = args ? (int)PyObject_Length(args) : 0;
+  for (ii = 0; (ii < 3) && (ii < argc); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ProsilicaCamera, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_ProsilicaCamera_setAttribute__SWIG_0(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ProsilicaCamera, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_float(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_ProsilicaCamera_setAttribute__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ProsilicaCamera, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_ProsilicaCamera_setAttribute__SWIG_2(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'ProsilicaCamera_setAttribute'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ProsilicaCamera::setAttribute(char const *,unsigned int)\n"
+    "    ProsilicaCamera::setAttribute(char const *,float)\n"
+    "    ProsilicaCamera::setAttribute(char const *,char const *)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_ProsilicaCamera_getStringAttribute(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ProsilicaCamera *arg1 = (ProsilicaCamera *) 0 ;
+  char *arg2 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ProsilicaCamera_getStringAttribute",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ProsilicaCamera, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ProsilicaCamera_getStringAttribute" "', argument " "1"" of type '" "ProsilicaCamera *""'"); 
+  }
+  arg1 = reinterpret_cast< ProsilicaCamera * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ProsilicaCamera_getStringAttribute" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  result = (char *)(arg1)->getStringAttribute((char const *)arg2);
+  resultobj = SWIG_FromCharPtr((const char *)result);
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return resultobj;
 fail:
@@ -13895,7 +14071,7 @@ SWIGINTERN PyObject *ProsilicaCamera_swigregister(PyObject *SWIGUNUSEDPARM(self)
 SWIGINTERN PyObject *_wrap__frameTo1DArray(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   tPvFrame arg1 ;
-  short *arg2 = (short *) 0 ;
+  unsigned short *arg2 = (unsigned short *) 0 ;
   int arg3 ;
   void *argp1 ;
   int res1 = 0 ;
@@ -13921,11 +14097,11 @@ SWIGINTERN PyObject *_wrap__frameTo1DArray(PyObject *SWIGUNUSEDPARM(self), PyObj
       if (SWIG_IsNewObj(res1)) delete temp;
     }
   }
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_short, 0 |  0 );
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_unsigned_short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_frameTo1DArray" "', argument " "2"" of type '" "short *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_frameTo1DArray" "', argument " "2"" of type '" "unsigned short *""'"); 
   }
-  arg2 = reinterpret_cast< short * >(argp2);
+  arg2 = reinterpret_cast< unsigned short * >(argp2);
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "_frameTo1DArray" "', argument " "3"" of type '" "int""'");
@@ -13952,9 +14128,9 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_test_it(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_test_it2__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  short *arg1 = (short *) 0 ;
+  unsigned short *arg1 = (unsigned short *) 0 ;
   int arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -13963,18 +14139,18 @@ SWIGINTERN PyObject *_wrap_test_it(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OO:test_it",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_short, 0 |  0 );
+  if (!PyArg_ParseTuple(args,(char *)"OO:test_it2",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_unsigned_short, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "test_it" "', argument " "1"" of type '" "short *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "test_it2" "', argument " "1"" of type '" "unsigned short *""'"); 
   }
-  arg1 = reinterpret_cast< short * >(argp1);
+  arg1 = reinterpret_cast< unsigned short * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "test_it" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "test_it2" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
-  test_it(arg1,arg2);
+  test_it2(arg1,arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -13982,7 +14158,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_test_it2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_test_it2__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   tPvFrame *result = 0 ;
   
@@ -13992,6 +14168,44 @@ SWIGINTERN PyObject *_wrap_test_it2(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   return resultobj;
 fail:
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_test_it2(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[3];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = args ? (int)PyObject_Length(args) : 0;
+  for (ii = 0; (ii < 2) && (ii < argc); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 0) {
+    return _wrap_test_it2__SWIG_1(self, args);
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_unsigned_short, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_test_it2__SWIG_0(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'test_it2'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    test_it2(unsigned short *,int)\n"
+    "    test_it2()\n");
+  return 0;
 }
 
 
@@ -14238,9 +14452,12 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"PvCameraEventCallbackUnRegister", _wrap_PvCameraEventCallbackUnRegister, METH_VARARGS, NULL},
 	 { (char *)"PvUtilityColorInterpolate", _wrap_PvUtilityColorInterpolate, METH_VARARGS, NULL},
 	 { (char *)"frame_callback", _wrap_frame_callback, METH_VARARGS, NULL},
-	 { (char *)"ProsilicaCamera_setAttribute", _wrap_ProsilicaCamera_setAttribute, METH_VARARGS, NULL},
 	 { (char *)"ProsilicaCamera_getUint32Attribute", _wrap_ProsilicaCamera_getUint32Attribute, METH_VARARGS, NULL},
 	 { (char *)"ProsilicaCamera_getFloat32Attribute", _wrap_ProsilicaCamera_getFloat32Attribute, METH_VARARGS, NULL},
+	 { (char *)"ProsilicaCamera_setEnumAttribute", _wrap_ProsilicaCamera_setEnumAttribute, METH_VARARGS, NULL},
+	 { (char *)"ProsilicaCamera_getEnumAttribute", _wrap_ProsilicaCamera_getEnumAttribute, METH_VARARGS, NULL},
+	 { (char *)"ProsilicaCamera_setAttribute", _wrap_ProsilicaCamera_setAttribute, METH_VARARGS, NULL},
+	 { (char *)"ProsilicaCamera_getStringAttribute", _wrap_ProsilicaCamera_getStringAttribute, METH_VARARGS, NULL},
 	 { (char *)"ProsilicaCamera__initFrame", _wrap_ProsilicaCamera__initFrame, METH_VARARGS, NULL},
 	 { (char *)"ProsilicaCamera__check", _wrap_ProsilicaCamera__check, METH_VARARGS, NULL},
 	 { (char *)"ProsilicaCamera__reportError", _wrap_ProsilicaCamera__reportError, METH_VARARGS, NULL},
@@ -14264,7 +14481,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"ProsilicaCamera_swigregister", ProsilicaCamera_swigregister, METH_VARARGS, NULL},
 	 { (char *)"_frameTo1DArray", _wrap__frameTo1DArray, METH_VARARGS, NULL},
 	 { (char *)"getCameraList", _wrap_getCameraList, METH_VARARGS, NULL},
-	 { (char *)"test_it", _wrap_test_it, METH_VARARGS, NULL},
 	 { (char *)"test_it2", _wrap_test_it2, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
@@ -14285,7 +14501,6 @@ static swig_type_info _swigt__p_long_long = {"_p_long_long", "tPvInt64 *|long lo
 static swig_type_info _swigt__p_p_PyObject = {"_p_p_PyObject", "PyObject **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_p_char = {"_p_p_p_char", "char ***|tPvAttrListPtr *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_void = {"_p_p_void", "tPvHandle *|void **", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_short = {"_p_short", "short *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_size_type = {"_p_size_type", "size_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__allocatorT_tPvCameraInfo_t = {"_p_std__allocatorT_tPvCameraInfo_t", "std::vector< tPvCameraInfo >::allocator_type *|std::allocator< tPvCameraInfo > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__invalid_argument = {"_p_std__invalid_argument", "std::invalid_argument *", 0, 0, (void*)0, 0};
@@ -14309,6 +14524,7 @@ static swig_type_info _swigt__p_tPvIpSettings = {"_p_tPvIpSettings", "tPvIpSetti
 static swig_type_info _swigt__p_tPvLinkEvent = {"_p_tPvLinkEvent", "enum tPvLinkEvent *|tPvLinkEvent *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "unsigned char *|tPvBoolean *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_long = {"_p_unsigned_long", "tPvUint32 *|unsigned long *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_unsigned_short = {"_p_unsigned_short", "unsigned short *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_value_type = {"_p_value_type", "value_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_void = {"_p_void", "void *", 0, 0, (void*)0, 0};
 
@@ -14326,7 +14542,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_p_PyObject,
   &_swigt__p_p_p_char,
   &_swigt__p_p_void,
-  &_swigt__p_short,
   &_swigt__p_size_type,
   &_swigt__p_std__allocatorT_tPvCameraInfo_t,
   &_swigt__p_std__invalid_argument,
@@ -14350,6 +14565,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_tPvLinkEvent,
   &_swigt__p_unsigned_char,
   &_swigt__p_unsigned_long,
+  &_swigt__p_unsigned_short,
   &_swigt__p_value_type,
   &_swigt__p_void,
 };
@@ -14367,7 +14583,6 @@ static swig_cast_info _swigc__p_long_long[] = {  {&_swigt__p_long_long, 0, 0, 0}
 static swig_cast_info _swigc__p_p_PyObject[] = {  {&_swigt__p_p_PyObject, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_p_char[] = {  {&_swigt__p_p_p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_void[] = {  {&_swigt__p_p_void, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_short[] = {  {&_swigt__p_short, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_size_type[] = {  {&_swigt__p_size_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__allocatorT_tPvCameraInfo_t[] = {  {&_swigt__p_std__allocatorT_tPvCameraInfo_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__invalid_argument[] = {  {&_swigt__p_std__invalid_argument, 0, 0, 0},{0, 0, 0, 0}};
@@ -14391,6 +14606,7 @@ static swig_cast_info _swigc__p_tPvIpSettings[] = {  {&_swigt__p_tPvIpSettings, 
 static swig_cast_info _swigc__p_tPvLinkEvent[] = {  {&_swigt__p_tPvLinkEvent, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_char[] = {  {&_swigt__p_unsigned_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_long[] = {  {&_swigt__p_unsigned_long, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_unsigned_short[] = {  {&_swigt__p_unsigned_short, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_value_type[] = {  {&_swigt__p_value_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_void[] = {  {&_swigt__p_void, 0, 0, 0},{0, 0, 0, 0}};
 
@@ -14408,7 +14624,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_p_PyObject,
   _swigc__p_p_p_char,
   _swigc__p_p_void,
-  _swigc__p_short,
   _swigc__p_size_type,
   _swigc__p_std__allocatorT_tPvCameraInfo_t,
   _swigc__p_std__invalid_argument,
@@ -14432,6 +14647,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_tPvLinkEvent,
   _swigc__p_unsigned_char,
   _swigc__p_unsigned_long,
+  _swigc__p_unsigned_short,
   _swigc__p_value_type,
   _swigc__p_void,
 };

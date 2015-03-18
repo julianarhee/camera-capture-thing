@@ -7,6 +7,7 @@ import sys
 
 import time
 import httplib
+from enum import Enum
 
 import numpy as np
 from numpy import *
@@ -19,6 +20,8 @@ from simple_camera_capture.camera import *
 from simple_camera_capture.led import *
 from simple_camera_capture.motion import *
 from settings import global_settings
+
+from simple_camera_capture.image_processing import ImageAnalyzer
 
 try:
     import queue
@@ -95,6 +98,9 @@ class CaptureController(object):
         # UI
         self.canvas_update_timer = None
         self.ui_queue = queue.Queue(5)
+        
+        #self.im_queue = queue.Queue(5) # NEW
+        #logging.info("ui_queue and im_queue created")
 
         self.target_ui_update_interval = 1 / 30.
         self.last_ui_get_time = time.time()
@@ -110,6 +116,16 @@ class CaptureController(object):
 
 
     def initialize(self):
+
+        # -------------------------------------------------------------
+        # Image "dumper" (put images to file system)
+        # -------------------------------------------------------------
+
+        if self.enable_save_to_disk:
+            self.image_dumper = ImageDumper(self.image_save_dir)
+            logging.info('Creating ImageDumper object at: %s', self.image_save_dir)
+        else:
+            self.image_dumper = None
 
         # -------------------------------------------------------------
         # LED Controller
@@ -137,8 +153,13 @@ class CaptureController(object):
                 logging.info('Connecting to Camera...')
                 self.camera_device = ProsilicaCameraDevice()
 
-                self.binning = 4
+                self.binningX = 4
+                self.binningY = 4
                 self.gain = 1
+                currbinx = self.binningX
+                currbiny = self.binningY
+                self.roi_width = 656/currbinx #164
+                self.roi_height = 456/currbiny #122
 
         except Exception, e:
                 logging.warning("Error connecting to camera: %s" % e.message)
@@ -162,17 +183,6 @@ class CaptureController(object):
         self.start_time = time.time()
         self.last_time = self.start_time
         self.conduit_fps = 0.
-
-
-        # -------------------------------------------------------------
-        # Image "dumper" (put images to file system)
-        # -------------------------------------------------------------
-
-        if self.image_save_dir:
-            #print "...got to image dumpah..."
-            self.image_dumper = ImageDumper(self.image_save_dir)
-        else:
-            self.image_dumper = None
 
 
         # -------------------------------------------------------------
@@ -263,11 +273,16 @@ class CaptureController(object):
         t = lambda: self.continuously_acquire_images()
         self.acq_thread = threading.Thread(target=t)
         self.acq_thread.start()
+        
+        #self.im_thread = threading.Thread(target=t)
+        #self.im_thread.start()
 
     def stop_continuous_acquisition(self):
         logging.info('Stopping continuous acquisition')
         self.continuously_acquiring = 0
         self.acq_thread.join()
+        
+        #self.im_thread.join()
 
     def ui_queue_put(self, item):
 
@@ -351,6 +366,7 @@ class CaptureController(object):
     def get_frame_rate(self):
         return self.frame_rate
 
+
     # a method to actually run the camera
     # it will push images into a Queue object (in a non-blocking fashion)
     # so that the UI can have at them
@@ -358,8 +374,11 @@ class CaptureController(object):
 
         logging.info('Started continuously acquiring...')
 
-        self.image_dump = ImageDumper(self.image_save_dir)
-        print "starting an image dump instance"
+        #self.image_dump = ImageDumper(self.image_save_dir)
+        #print "creating image dumper"
+
+        #self.image_analyze = ImageAnalyzer(self.image_save_dir)
+        #print "creating image analyzer"
 
         self.frame_rate = -1.
         frame_number = 0
@@ -485,13 +504,83 @@ class CaptureController(object):
                     print f
 
             self.ui_queue_put(features)
-            self.image_dump.save_image(features)    
+
+            # Only recording imaging data if recording status turned on:
+            if self.image_dumper != None and self.image_dumper.status():
+                self.image_dumper.save_image(features)
+
+            # TRY FFT on chunk of frames (some interval = 1-2 cycles of stimulus)
+            # try:
+            #     curr_nbins = len(self.image_analyze.listdir_nohidden(self.image_dump.base_path))
+            #     if curr_nbins >= 3: # eventually, replace num of bin folders with time period of stim cycle (?)
+            #         self.image_analyze()
                 
 
         self.camera_locked = 0
 
         logging.info('Stopped continuous acquiring')
         return
+
+
+    # Functions used in GUI to change camera attributes (using ATB):
+    def get_exposure_mode(self, a):
+        attribute = Enum('ExposureMode', 'Manual AutoOnce Auto')
+        label = self.camera_device.camera.getEnumAttribute(a)
+        return attribute[label].value-1
+
+    def set_exposure_mode(self, a, val):
+        attribute = Enum('ExposureMode', 'Manual AutoOnce Auto')
+        modes = list(attribute)
+        enumval = modes[val].name
+        self.camera_device.camera.setEnumAttribute(a, enumval)
+
+    def get_pixel_format(self, a):
+        attribute = Enum('PixelFormat', 'Mono8 Mono12Packed Mono16')
+        label = self.camera_device.camera.getEnumAttribute(a)
+        return attribute[label].value-1
+
+    def set_pixel_format(self, a, val):
+        attribute = Enum('PixelFormat', 'Mono8 Mono12Packed Mono16')
+        modes = list(attribute)
+        enumval = modes[val].name
+        logging.info('Changing pixel format: %s %i', a, val)
+        self.camera_device.camera.setEnumAttribute(a, enumval)
+
+    def get_recording_name(self, a):
+        if self.image_dumper != None and getattr(self.image_dumper, a,
+                    None) is not None and self.image_dumper.recording != None:
+            return self.image_dumper.subname
+
+    def set_recording_name(self, name):
+        v = self.image_dumper
+        if getattr(v, 'subname', 'None') is None:
+            return
+        else:
+            setattr(v, 'subname', str(name))
+
+    def get_recording_status(self, a):
+        if self.image_dumper != None and getattr(self.image_dumper, a,
+                    None) is not None and self.image_dumper.recording != None:
+            return self.image_dumper.status()
+
+    def set_recording_status(self, a, val):
+        v = self.image_dumper
+
+        if getattr(v, 'recording', 'None') is None:
+            return
+        else:
+            logging.info('Changing recording status: %s %i', a, val)
+            setattr(v, 'recording', int(val))
+
+
+    @property
+    def recording(self):
+        return self.get_recording_status('recording')
+
+    @recording.setter
+    def recording(self, value):
+        self.set_recording_status('recording', int(value))
+
 
     def get_camera_attribute(self, a):
         if self.camera_device != None and getattr(self.camera_device, 'camera',
@@ -503,10 +592,18 @@ class CaptureController(object):
     def set_camera_attribute(self, a, value):
         if getattr(self.camera_device, 'camera', None) is None:
             return
+        self.camera_device.camera.setAttribute(a, int(value))
 
-        self.camera_device.camera.setAttribute(a, int(value))
-        # Why is this being set twice??
-        self.camera_device.camera.setAttribute(a, int(value))
+
+    def set_width(self, a):
+        binX = self.get_camera_attribute('BinningX')
+        print "got called"
+        self.set_camera_attribute(a, int(656/binX))
+
+    def set_height(self, a):
+        binY = self.get_camera_attribute('BinningY')
+        self.set_camera_attribute(a, int(492/binY))
+
 
     @property
     def exposure(self):
@@ -516,15 +613,30 @@ class CaptureController(object):
     def exposure(self, value):
         self.set_camera_attribute('ExposureValue', int(value))
 
+
     @property
-    def binning(self):
+    def binningX(self):
         return self.get_camera_attribute('BinningX')
 
-    @binning.setter
-    def binning(self, value):
+    @binningX.setter
+    def binningX(self, value):
         self.set_camera_attribute('BinningX', int(value))
-        self.set_camera_attribute('BinningY', int(value))
+        #binx = self.get_camera_attribute('BinningX')
+        #self.camera_device.camera.setAttribute('Width', 656/int(value))
+        self.set_width('Width')
+        time.sleep(0.1)
 
+
+    @property
+    def binningY(self):
+        return self.get_camera_attribute('BinningY')
+
+    @binningY.setter
+    def binningY(self, value):
+        self.set_camera_attribute('BinningY', int(value))
+        #biny = self.get_camera_attribute('BinningY')
+        #self.set_camera_attribute('Height', int(492/value))
+        #self.camera_device.camera.setAttribute('Height', 492/int(value))
         time.sleep(0.1)
 
     @property
@@ -536,6 +648,7 @@ class CaptureController(object):
         self.gain_factor = value
         self.set_camera_attribute('GainValue', int(value))
 
+
     @property
     def roi_width(self):
         return self.get_camera_attribute('Width')
@@ -544,6 +657,12 @@ class CaptureController(object):
     def roi_width(self, value):
         self.set_camera_attribute('Width', int(value))
 
+    # @roi_width.setter
+    # def roi_width(self, self.get_camera_attribute('BinningX')):
+    #     binX = self.get_camera_attribute('BinningX')
+    #     self.set_camera_attribute('Width', int(656/binX))
+
+
     @property
     def roi_height(self):
         return self.get_camera_attribute('Height')
@@ -551,6 +670,13 @@ class CaptureController(object):
     @roi_height.setter
     def roi_height(self, value):
         self.set_camera_attribute('Height', int(value))
+
+    # @roi_height.setter
+    # def roi_height(self):
+    #     binY = self.get_camera_attribute('BinningY')
+    #     self.set_camera_attribute('Height', int(492/binY))
+
+
 
     @property
     def roi_offset_x(self):

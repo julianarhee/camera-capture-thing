@@ -100,7 +100,12 @@ class CaptureGUI:
         self.update_interval = 1 / 10000.
 
         atb.init()
-        self.window = glumpy.Window(900, 600)
+
+        # Try grabbing current Width x Height for window to draw:
+        # W = self.controller.get_camera_attribute('Width')
+        # H = self.controller.get_camera_attribute('Height')
+        # print "DEFINING WINDOW!!!! " + str(W) + ", " + str(H)
+        self.window = glumpy.Window(656, 492) # (900, 700)
 
         # ---------------------------------------------------------------------
         #   STAGE CONTROLS
@@ -261,69 +266,119 @@ class CaptureGUI:
 
 
         self.cam_bar.add_var(
+            'Recording/status',
+            label='REC',
+            vtype=atb.TW_TYPE_UINT32,
+            getter=lambda: c.get_recording_status('recording'),
+            setter=lambda x: c.set_recording_status('recording', int(x)),
+            #attr='recording',
+            )
+
+
+        self.cam_bar.add_var(
+            'Recording/name',
+            label='name',
+            vtype=atb.TW_TYPE_CDSTRING,
+            getter=lambda: c.get_recording_name('subname'),
+            setter=lambda x: c.set_recording_name(str(x)),
+            #attr='recording',
+            )
+
+
+        PixelFormat = atb.enum('PixelFormat', {'Mono8': 0,
+                                'Mono12Packed': 1, 'Mono16': 2})
+
+        self.cam_bar.add_var(
+            'PixelFormat',
+            label='pixel format',
+            vtype=PixelFormat,
+            getter=lambda: c.get_pixel_format('PixelFormat'),
+            setter=lambda x: c.set_pixel_format('PixelFormat', int(x)),
+            ) 
+
+
+        self.cam_bar.add_var(
+            'BytesPerFrame',
+            label='total bytes per frame',
+            vtype=atb.TW_TYPE_UINT32,
+            min=1,
+            max=645504,
+            step=1,
+            getter=lambda: c.get_camera_attribute('TotalBytesPerFrame'),
+            # setter=lambda x: c.set_camera_attribute('BinningX', int(x)),
+            )
+
+
+        self.cam_bar.add_var(
             'framerate',
             label='frame rate',
             vtype=atb.TW_TYPE_FLOAT,
             min=1,
-            max=200,
+            max=125,
             step=0.1,
             readonly=True,
-            getter=lambda: float(c.get_frame_rate())
-        )        
+            getter=lambda: float(c.get_frame_rate()),
+            )        
 
         self.cam_bar.add_var(
-            'Binning/binningx',
+            'Binning/binningX',
             label='binning X',
             vtype=atb.TW_TYPE_UINT32,
             min=1,
-            max=16,
+            max=4,
             step=1,
             getter=lambda: c.get_camera_attribute('BinningX'),
             setter=lambda x: c.set_camera_attribute('BinningX', int(x)),
             )
 
         self.cam_bar.add_var(
-            'Binning/binningy',
+            'Binning/binningY',
             label='binning Y',
             vtype=atb.TW_TYPE_UINT32,
             min=1,
-            max=16,
+            max=4,
             step=1,
             getter=lambda: c.get_camera_attribute('BinningY'),
             setter=lambda x: c.set_camera_attribute('BinningY', int(x)),
             )
 
 
+        ExposureMode = atb.enum('ExposureMode', {'Manual': 0,
+                                'AutoOnce': 1, 'Auto': 2})
 
-        # ExposureMode = atb.enum('ExposureMode', {'manual': 0,
-        #                             'auto_once': 1, 'auto': 2})
-        # self.cam_bar.add_var('Exposure/mode', label='mode',
-        #                        vtype=ExposureMode,
-        #                        getter=lambda: c.get_camera_attribute('ExposureMode'),
-        #                        setter=lambda x: c.set_camera_attribute('ExposureMode', int(x)))
+        self.cam_bar.add_var(
+            'Exposure/mode', 
+            label='mode',
+            vtype=ExposureMode,
+            getter=lambda: c.get_exposure_mode('ExposureMode'),
+            setter=lambda x: c.set_exposure_mode('ExposureMode', int(x)),
+            )
 
 
-        # self.cam_bar.add_var(
-        #     'Exposure/value',
-        #     label='time (ms)',
-        #     vtype=atb.TW_TYPE_UINT32,
-        #     min=1,
-        #     max=1000,
-        #     step=1,
-        #     getter=lambda: c.get_camera_attribute('ExposureValue'),
-        #     setter=lambda x: c.set_camera_attribute('ExposureValue', int(x)),
-        #     )
+        self.cam_bar.add_var(
+            'Exposure/value',
+            label='time (us)',
+            vtype=atb.TW_TYPE_UINT32,
+            min=0,
+            max=150000,
+            step=1,
+            getter=lambda: c.get_camera_attribute('ExposureValue'),
+            setter=lambda x: c.set_camera_attribute('ExposureValue', int(x)),
+            )
 
-        # self.cam_bar.add_var(
-        #     'gain',
-        #     label='gain',
-        #     vtype=atb.TW_TYPE_UINT32,
-        #     min=1,
-        #     max=16,
-        #     step=1,
-        #     target=c,
-        #     attr='gain',
-        #     )
+        self.cam_bar.add_var(
+            'gain',
+            label='Gain',
+            vtype=atb.TW_TYPE_UINT32,
+            min=1,
+            max=50,
+            step=1,
+            #target=c,
+            getter=lambda: c.get_camera_attribute('GainValue'),
+            setter=lambda x: c.set_camera_attribute('GainValue', int(x)),
+            attr='gain',
+            )
+
 
         # self.cam_bar.add_var(
         #     'exposure',
@@ -336,27 +391,31 @@ class CaptureGUI:
         #     attr='exposure',
         #     )
 
-        # self.cam_bar.add_var(
-        #     'ROI/roi_width',
-        #     label='width',
-        #     vtype=atb.TW_TYPE_UINT32,
-        #     min=1,
-        #     max=800,
-        #     step=1,
-        #     target=c,
-        #     attr='roi_width',
-        #     )
+        self.cam_bar.add_var(
+            'ROI/roi_width',
+            label='width',
+            vtype=atb.TW_TYPE_UINT32,
+            min=1,
+            max=656,#656,
+            step=1,
+            #target=c,
+            getter=lambda: c.get_camera_attribute('Width'),
+            setter=lambda x: c.set_camera_attribute('Width', int(x)),
+            attr='roi_width',
+            )
 
-        # self.cam_bar.add_var(
-        #     'ROI/roi_height',
-        #     label='height',
-        #     vtype=atb.TW_TYPE_UINT32,
-        #     min=1,
-        #     max=800,
-        #     step=1,
-        #     target=c,
-        #     attr='roi_height',
-        #     )
+        self.cam_bar.add_var(
+            'ROI/roi_height',
+            label='height',
+            vtype=atb.TW_TYPE_UINT32,
+            min=1,
+            max=492,#492,
+            step=1,
+            #target=c,
+            getter=lambda: c.get_camera_attribute('Height'),
+            setter=lambda x: c.set_camera_attribute('Height', int(x)),
+            attr='roi_height',
+            )
 
         # self.cam_bar.add_var(
         #     'ROI/roi_offset_x',
@@ -425,6 +484,7 @@ class CaptureGUI:
             return
 
         now = time.time()
+        #logging.info('tracker time is now NOW')
 
         try:
             features = self.controller.ui_queue_get()
